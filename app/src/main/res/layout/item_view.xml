@@ -26,7 +26,7 @@
             android:ellipsize="end"
             android:padding="3dp"
             android:singleLine="true"
-            android:text="小米6来了：晓龙835+8G运存！"
+            android:text=""
             android:textColor="#333"
             android:textSize="14sp"/>
     </LinearLayout>
@@ -52,7 +52,7 @@
             android:ellipsize="end"
             android:padding="3dp"
             android:singleLine="true"
-            android:text="227斤的胖MM，掀起上衣后，美爆全场！"
+            android:text=""
             android:textColor="#333"
             android:textSize="14sp"/>
     </LinearLayout>

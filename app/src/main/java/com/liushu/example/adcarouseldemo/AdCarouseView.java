@@ -3,7 +3,6 @@ package com.liushu.example.adcarouseldemo;
 import android.content.Context;
 import android.support.annotation.AnimRes;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -12,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +23,7 @@ public class AdCarouseView extends ViewFlipper {
     private int inAnimResId = R.anim.anim_marquee_in;
     private int outAnimResId = R.anim.anim_marquee_out;
 
-    private List<String> notices;
+    private List<String> notices = new ArrayList<>();
     private int firstPosition;
     private int lastPosition;
     private boolean hasSetAnimDuration = true;
@@ -31,6 +31,16 @@ public class AdCarouseView extends ViewFlipper {
     private OnClickListener mListener;
 
     private int interval = 3000;
+
+    public AdCarouseView(Context context) {
+        super(context);
+        addView(createView(0, 0));
+    }
+
+    public AdCarouseView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        addView(createView(0, 0));
+    }
 
     public void setListener(OnClickListener listener) {
         mListener = listener;
@@ -40,12 +50,41 @@ public class AdCarouseView extends ViewFlipper {
         startWithList(notices, inAnimResId, outAnimResId);
     }
 
-    public AdCarouseView(Context context) {
-        super(context);
-    }
 
-    public AdCarouseView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    private void initView() {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.item_view, null);
+        addView(view);
+        setInAndOutAnimation(inAnimResId, outAnimResId);
+        getInAnimation().setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                firstPosition = firstPosition + 2;
+                lastPosition = lastPosition + 2;
+                if (firstPosition >= notices.size()) {
+                    firstPosition = 0;
+                }
+                if (lastPosition >= notices.size()) {
+                    if (notices.size() == 1) {
+                        lastPosition = 0;
+                    } else {
+                        lastPosition = 1;
+                    }
+                }
+                View view = createView(firstPosition, lastPosition);
+                if (view.getParent() == null) {
+                    addView(view);
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
     }
 
     /**
@@ -68,8 +107,6 @@ public class AdCarouseView extends ViewFlipper {
     }
 
     private boolean start(@AnimRes int inAnimResId, @AnimRes int outAnimResID) {
-        removeAllViews();
-        clearAnimation();
 
         firstPosition = 0;
         if (notices.size() == 1) {
@@ -78,58 +115,49 @@ public class AdCarouseView extends ViewFlipper {
             lastPosition = 1;
         }
         addView(createView(firstPosition, lastPosition));
-        if (notices.size() > 1) {
-            setInAndOutAnimation(inAnimResId, outAnimResID);
+        if (notices.size() > 0) {
             startFlipping();
+            setInAndOutAnimation(inAnimResId, outAnimResID);
+            getInAnimation().setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+
+                    firstPosition = firstPosition + 2;
+                    lastPosition = lastPosition + 2;
+                    if (firstPosition >= notices.size()) {
+                        firstPosition = 0;
+                    }
+                    if (lastPosition >= notices.size()) {
+                        if (notices.size() == 1) {
+                            lastPosition = 0;
+                        } else {
+                            lastPosition = 1;
+                        }
+                    }
+                    View view = createView(firstPosition, lastPosition);
+                    if (view.getParent() == null) {
+                        addView(view);
+                    }
+                }
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
         }
 
 
-        /*if (notices.size() > 1) {
-            setInAndOutAnimation(inAnimResId, outAnimResID);
-            startFlipping();
-        }*/
-
-        getInAnimation().setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-                firstPosition =firstPosition+ 2;
-                lastPosition =lastPosition+ 2;
-                if (firstPosition >= notices.size()) {
-                    firstPosition = 0;
-                }
-                if (lastPosition >= notices.size()) {
-                    if (notices.size() == 1) {
-                        lastPosition = 0;
-                    } else {
-                        lastPosition = 1;
-                    }
-                }
-                View view = createView(firstPosition, lastPosition);
-                if (view.getParent() == null) {
-                    addView(view);
-                }
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
         return true;
     }
 
     private View createView(int firstPosition, int lastPosition) {
-        Log.e("firstPosition","firstPosition:"+firstPosition);
-        Log.e("lastPosition","lastPosition:"+lastPosition);
-       // View view = getChildAt((getDisplayedChild() + 1) % 3);
         View view = getChildAt((getDisplayedChild() + 1) % 3);
         ViewHolder holder;
         if (view == null) {
-            view = LayoutInflater.from(getContext()).inflate(R.layout.item_view, null);
+             view = LayoutInflater.from(getContext()).inflate(R.layout.item_view, null);
             holder = new ViewHolder();
             holder.mLl_first = (LinearLayout) view.findViewById(R.id.ll_first);
             holder.mLl_last = (LinearLayout) view.findViewById(R.id.ll_last);
@@ -139,12 +167,19 @@ public class AdCarouseView extends ViewFlipper {
         }
 
         holder = (ViewHolder) view.getTag();
-        holder.mTv_first.setText(notices.get(firstPosition));
-        holder.mTv_last.setText(notices.get(lastPosition));
-        holder.mLl_first.setTag(firstPosition);
-        holder.mLl_first.setOnClickListener(mListener);
-        holder.mLl_last.setTag(lastPosition);
-        holder.mLl_last.setOnClickListener(mListener);
+
+        if (notices.isEmpty()) {
+            holder.mTv_first.setText("");
+            holder.mTv_last.setText("");
+        } else {
+            holder.mTv_first.setText(notices.get(firstPosition));
+            holder.mTv_last.setText(notices.get(lastPosition));
+            holder.mLl_first.setTag(firstPosition);
+            holder.mLl_first.setOnClickListener(mListener);
+            holder.mLl_last.setTag(lastPosition);
+            holder.mLl_last.setOnClickListener(mListener);
+        }
+
         return view;
     }
 
@@ -163,6 +198,5 @@ public class AdCarouseView extends ViewFlipper {
         private TextView mTv_last;
         private LinearLayout mLl_first;
         private LinearLayout mLl_last;
-
     }
 }

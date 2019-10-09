@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="#383838"
+    android:paddingTop="5dp"
+    android:id="@+id/ll_content"
+    android:paddingBottom="5dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_head"
+        android:layout_width="wrap_content"
+        android:text="仅差2.2万元就能升级为“VIP7”！"
+        android:textColor="#EAD2C0"
+        android:textSize="12dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:text="去升级"
+        android:layout_width="wrap_content"
+        android:textSize="12dp"
+        android:textColor="#EAD2C0"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/iv_go"
+        android:src="@drawable/icon_upgrade"
+        android:layout_width="13dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="13dp" />
+</LinearLayout>

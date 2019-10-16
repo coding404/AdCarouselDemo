@@ -1,18 +1,19 @@
-package com.liushu.example.adcarouseldemo.adapter
+package com.demo.adlib
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 
 /**
- * created by  liushu
- * created on  2019-09-08
- * description：
- */
-abstract class BaseAdAdapter<T>(protected var context: Context, protected var mData: List<T>? = null) {
+ *
+ *   created by  liushu
+ *   created on  2019-10-16
+ *   description：
+ *
+ **/
+abstract class BaseAdAdapter<T>(protected var mContext: Context, protected var mData: List<T>? = null) {
 
     private val mLayoutInflater: LayoutInflater
-    var mAdClickListener: IAdViewCLickListener? = null
 
     /**
      * 提供数据的大小
@@ -25,7 +26,7 @@ abstract class BaseAdAdapter<T>(protected var context: Context, protected var mD
         } else mData!!.size
 
     init {
-        mLayoutInflater = LayoutInflater.from(context)
+        mLayoutInflater = LayoutInflater.from(mContext)
     }
 
     /**
@@ -47,17 +48,4 @@ abstract class BaseAdAdapter<T>(protected var context: Context, protected var mD
     abstract fun getView(position: Int): View
 
 
-    fun setAdClickListener(listener: IAdViewCLickListener?) {
-        this.mAdClickListener = listener
-    }
-
-    //清除监听
-    fun clearListener() {
-        this.mAdClickListener = null
-    }
-
-    //视图点击事件
-    interface IAdViewCLickListener {
-        fun onViewClick(tag: Any = "")
-    }
 }

@@ -1,18 +1,15 @@
 package com.liushu.example.adcarouseldemo.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.demo.adlib.AdView
 import com.liushu.example.adcarouseldemo.*
 import com.liushu.example.adcarouseldemo.adapter.*
-import com.liushu.example.adcarouseldemo.conts.Conts
 import com.liushu.example.adcarouseldemo.entity.SaleEntity
-import com.liushu.example.adcarouseldemo.widget.AdView
 
 import java.util.ArrayList
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(){
 
     private var mList: MutableList<String>? = null
 
@@ -22,37 +19,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initSimpleData()
-        initComplexData()
-        initShopData()
+        //简单布局
         initHeadData()
+        initSimpleData()
+        //半固定布局
+        initHalfData()
+        //多布局多点击事件
+        initComplexData()
     }
 
     private fun initHeadData() {
-        val head = findViewById<AdView>(R.id.bv_head)
+        val head = findViewById<AdView>(R.id.bv_head_normal)
         mHeadAdapter = HeadAdapter(this, null)
-        mHeadAdapter?.setAdClickListener(object : BaseAdAdapter.IAdViewCLickListener {
-            override fun onViewClick(tag: Any) {
-                if (tag is String) {
-
-                    when (tag) {
-                        Conts.CONTENT_CLICK -> Toast.makeText(this@MainActivity, "" + tag, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        })
-
         head.setAdapter(mHeadAdapter)
     }
 
-    private fun initShopData() {
+    private fun initComplexData() {
         val mAdViewProduct = findViewById<AdView>(R.id.ad_view_product)
         mAdViewProduct.setAdapter(ProductsAdapter(this, null))
     }
 
-    private fun initComplexData() {
+    private fun initHalfData() {
 
-        val mAdViewSale = findViewById<AdView>(R.id.ad_view_sale)
+        val mAdHalf = findViewById<AdView>(R.id.ad_half)
         val saleEntities = ArrayList<SaleEntity>()
 
         val saleEntity = SaleEntity()
@@ -70,7 +59,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         saleEntities.add(saleEntity)
         saleEntities.add(saleEntity1)
 
-        mAdViewSale.setAdapter(SaleAdapter(this, saleEntities))
+        mAdHalf.setAdapter(HalfAdapter(this, saleEntities))
     }
 
     private fun initSimpleData() {
@@ -78,20 +67,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val mAdView = findViewById<AdView>(R.id.ad_view_normal)
         val list = ArrayList<String>()
         list.add("苹果Mac book Pro 24期免息！")
-        list.add("领券家电立减800");
+        list.add("领券家电立减800")
         mAdView.setAdapter(SimpleAdAdapter(this, list))
-
-    }
-
-    override fun onClick(v: View) {
-        if (v.tag is Int) {
-            val position = v.tag as Int
-            Toast.makeText(this, mList!![position], Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mHeadAdapter?.clearListener()
     }
 }

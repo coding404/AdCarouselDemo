@@ -14,13 +14,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <com.liushu.example.adcarouseldemo.widget.AdView
-        android:id="@+id/bv_head"
+    <com.demo.adlib.AdView
+        android:id="@+id/bv_head_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         app:adInterval="5000"/>
+
+    <com.demo.adlib.AdView
+        android:id="@+id/ad_view_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        app:adInterval="1500" />
 
     <TextView
         android:text="半固定单布局"
@@ -44,24 +51,13 @@
             android:layout_margin="5dp"
             android:background="@android:color/darker_gray" />
 
-        <com.liushu.example.adcarouseldemo.widget.AdView
-            android:id="@+id/ad_view_sale"
+        <com.demo.adlib.AdView
+            android:id="@+id/ad_half"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:adInterval="2000" />
     </LinearLayout>
 
-    <TextView
-        android:text="多布局"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <com.liushu.example.adcarouseldemo.widget.AdView
-        android:id="@+id/ad_view_normal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        app:adInterval="1500" />
 
     <TextView
         android:text="多布局多点击事件"
@@ -69,7 +65,7 @@
         android:layout_height="wrap_content"/>
 
 
-    <com.liushu.example.adcarouseldemo.widget.AdView
+    <com.demo.adlib.AdView
         android:id="@+id/ad_view_product"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"

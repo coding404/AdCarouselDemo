@@ -1,18 +1,18 @@
-package com.liushu.example.adcarouseldemo.widget
+package com.demo.adlib
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.animation.AnimationUtils
 import android.widget.ViewFlipper
-import com.liushu.example.adcarouseldemo.R
-import com.liushu.example.adcarouseldemo.adapter.BaseAdAdapter
 
 /**
- * created by  liushu
- * created on  2019-09-08
- * description：轮播控件
- */
-class AdView : ViewFlipper{
+ *
+ *   created by  liushu
+ *   created on  2019-10-16
+ *   description：轮播view
+ *
+ **/
+class AdView : ViewFlipper {
 
     private var mAdInterval = DEFAULT_INTERVAL
     private var mAdEnterAnim = DEFAULT_ENTER_ANIM

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.demo.adlib.BaseAdAdapter
 import com.liushu.example.adcarouseldemo.R
 import com.liushu.example.adcarouseldemo.entity.SaleEntity
 
@@ -12,7 +13,7 @@ import com.liushu.example.adcarouseldemo.entity.SaleEntity
  * created on  2019-09-08
  * description：
  */
-class SaleAdapter(context: Context, data: List<SaleEntity>) : BaseAdAdapter<SaleEntity>(context, data) {
+class HalfAdapter(context: Context, data: List<SaleEntity>) : BaseAdAdapter<SaleEntity>(context, data) {
 
     override fun getView(position: Int): View {
         val view = getRootView(R.layout.item_sale)

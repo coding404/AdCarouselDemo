@@ -4,8 +4,9 @@ import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
+import com.demo.adlib.BaseAdAdapter
 import com.liushu.example.adcarouseldemo.R
-import com.liushu.example.adcarouseldemo.conts.Conts
 
 /**
  * created by  liushu
@@ -22,13 +23,8 @@ class HeadAdapter(context: Context, list: List<Any>?) : BaseAdAdapter<Any>(conte
         val llContent = rootView.findViewById<LinearLayout>(R.id.ll_content)
         val ivGo = rootView.findViewById<ImageView>(R.id.iv_go)
         llContent.setOnClickListener {
-
-            mAdClickListener?.onViewClick(Conts.CONTENT_CLICK)
+            Toast.makeText(mContext,"这是第$position 条",Toast.LENGTH_SHORT).show()
         }
-
-       /* ivGo.setOnClickListener {
-            mAdClickListener?.onViewClick(Conts.GO_ICON)
-        }*/
 
         return rootView
     }
